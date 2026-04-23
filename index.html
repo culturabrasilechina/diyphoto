@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal Interno | Comunicação Corporativa</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --brand: #0f4c81;
+      --brand-2: #1e6aa8;
+      --text: #233142;
+      --muted: #607285;
+      --ok: #2b8a3e;
+      --danger: #c0392b;
+      --border: #d8e1eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .hidden { display: none !important; }
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 6px 30px rgba(15, 76, 129, .10);
+    }
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+    }
+    h1, h2, h3 { margin: 0 0 10px; }
+    .subtitle { color: var(--muted); margin-bottom: 18px; }
+    .field { margin-bottom: 12px; }
+    label { display: block; font-size: 14px; margin-bottom: 6px; }
+    input, select, textarea, button {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 15px;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(30, 106, 168, 0.25);
+      border-color: var(--brand-2);
+    }
+    button {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { background: var(--brand-2); }
+    .ghost {
+      background: #edf3f9;
+      color: var(--brand);
+    }
+    .danger { background: var(--danger); }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px;
+    }
+    .header-row {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .brand {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--brand);
+    }
+    .quick-actions { display: flex; gap: 8px; }
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 14px;
+    }
+    nav {
+      position: sticky;
+      top: 72px;
+      align-self: start;
+      padding: 10px;
+    }
+    .nav-btn {
+      text-align: left;
+      margin-bottom: 8px;
+      background: #f1f6fb;
+      color: var(--brand);
+    }
+    .nav-btn.active {
+      background: var(--brand);
+      color: #fff;
+    }
+    .content {
+      display: grid;
+      gap: 12px;
+    }
+    .section {
+      padding: 14px;
+    }
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    .item {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .item small { color: var(--muted); }
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      margin-bottom: 8px;
+      background: #ebf4fc;
+      color: var(--brand);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .admin-form {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .admin-form .full { grid-column: 1 / -1; }
+    .row { display: flex; gap: 8px; }
+    .muted { color: var(--muted); }
+    .empty { text-align: center; color: var(--muted); padding: 16px; }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .nav-btn { margin: 0; padding: 10px 8px; font-size: 13px; }
+      .quick-actions button { padding: 10px; }
+      .header-row { grid-template-columns: 1fr; }
+      .admin-form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <section id="loginScreen" class="screen">
+    <div class="card login-card">
+      <h1>Portal Interno</h1>
+      <p class="subtitle">Central de comunicação para colaboradores e liderança.</p>
+      <div class="field">
+        <label for="username">Usuário</label>
+        <input id="username" placeholder="Digite seu usuário" />
+      </div>
+      <div class="field">
+        <label for="password">Senha</label>
+        <input id="password" type="password" placeholder="Digite sua senha" />
+      </div>
+      <button id="loginBtn">Entrar</button>
+      <p class="subtitle" style="margin-top:12px; font-size:13px;">
+        Teste rápido: <b>colaborador</b>/<b>1234</b> ou <b>admin</b>/<b>admin123</b>
+      </p>
+      <p id="loginMsg" class="muted" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <main id="app" class="hidden">
+    <header class="header">
+      <div class="header-row">
+        <div>
+          <div class="brand">Portal de Comunicação Corporativa</div>
+          <input id="searchInput" placeholder="Buscar avisos, comunicados, treinamentos e materiais..." />
+        </div>
+        <div class="quick-actions">
+          <button class="ghost" id="profileBtn">Perfil</button>
+          <button class="ghost" id="logoutBtn">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="card" id="mainNav">
+        <button class="nav-btn active" data-view="inicio">Início</button>
+        <button class="nav-btn" data-view="avisos">Avisos e Notícias</button>
+        <button class="nav-btn" data-view="comunicados">Comunicados</button>
+        <button class="nav-btn" data-view="treinamentos">Treinamentos</button>
+        <button class="nav-btn" data-view="materiais">Materiais de Apoio</button>
+        <button class="nav-btn hidden" id="adminTab" data-view="admin">Administração</button>
+      </nav>
+
+      <section class="content" id="content"></section>
+    </div>
+  </main>
+
+<script>
+const users = {
+  colaborador: { password: '1234', role: 'employee', name: 'Colaborador Interno', area: 'Operações' },
+  lider: { password: '1234', role: 'leader', name: 'Líder de Área', area: 'Gestão' },
+  admin: { password: 'admin123', role: 'admin', name: 'Administrador RH', area: 'Recursos Humanos' }
+};
+
+const defaultContent = [
+  { id: crypto.randomUUID(), category: 'avisos', title: 'Campanha de vacinação interna', text: 'A vacinação ocorrerá na próxima terça-feira no auditório.', date: '2026-04-20' },
+  { id: crypto.randomUUID(), category: 'avisos', title: 'Nova política de uniformes', text: 'Consulte as regras atualizadas e os prazos de adequação.', date: '2026-04-18' },
+  { id: crypto.randomUUID(), category: 'comunicados', title: 'Fechamento mensal', text: 'Envie pendências operacionais até o dia 28.', date: '2026-04-21' },
+  { id: crypto.randomUUID(), category: 'treinamentos', title: 'Treinamento de segurança', text: 'Módulo obrigatório disponível até 30/04 na plataforma interna.', date: '2026-04-15' },
+  { id: crypto.randomUUID(), category: 'materiais', title: 'Guia rápido de benefícios', text: 'Material atualizado com regras de vale e plano de saúde.', date: '2026-04-10' }
+];
+
+let currentUser = null;
+let currentView = 'inicio';
+
+function getContent() {
+  const stored = localStorage.getItem('portal-content');
+  if (!stored) {
+    localStorage.setItem('portal-content', JSON.stringify(defaultContent));
+    return [...defaultContent];
+  }
+  return JSON.parse(stored);
+}
+
+function setContent(data) {
+  localStorage.setItem('portal-content', JSON.stringify(data));
+}
+
+function formatDate(iso) {
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function filterItems(category = null) {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  return getContent().filter(item => {
+    const byCategory = !category || item.category === category;
+    const hay = `${item.title} ${item.text}`.toLowerCase();
+    const bySearch = !q || hay.includes(q);
+    return byCategory && bySearch;
+  });
+}
+
+function cardsHtml(items) {
+  if (!items.length) return '<p class="empty">Nenhum conteúdo encontrado.</p>';
+  return `<div class="grid">${items.map(item => `
+    <article class="item">
+      <span class="pill">${item.category}</span>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+      <small>Atualizado em ${formatDate(item.date)}</small>
+    </article>`).join('')}
+  </div>`;
+}
+
+function render() {
+  const root = document.getElementById('content');
+  const all = getContent();
+
+  const blocks = {
+    inicio: `
+      <section class="card section">
+        <div class="section-title">
+          <h2>Destaques</h2><small class="muted">Informações prioritárias do dia</small>
+        </div>
+        ${cardsHtml(filterItems().slice(0,6))}
+      </section>`,
+    avisos: `<section class="card section"><h2>Avisos e Notícias</h2>${cardsHtml(filterItems('avisos'))}</section>`,
+    comunicados: `<section class="card section"><h2>Comunicados</h2>${cardsHtml(filterItems('comunicados'))}</section>`,
+    treinamentos: `<section class="card section"><h2>Treinamentos</h2>${cardsHtml(filterItems('treinamentos'))}</section>`,
+    materiais: `<section class="card section"><h2>Materiais de Apoio</h2>${cardsHtml(filterItems('materiais'))}</section>`,
+    admin: renderAdmin(all)
+  };
+
+  if (currentView === 'admin' && currentUser?.role !== 'admin') {
+    currentView = 'inicio';
+  }
+  root.innerHTML = blocks[currentView] || blocks.inicio;
+  bindAdminActions();
+}
+
+function renderAdmin(items) {
+  return `
+    <section class="card section">
+      <div class="section-title"><h2>Dashboard Administrativo</h2><small class="muted">Publicação e atualização de conteúdos</small></div>
+      <form id="adminForm" class="admin-form">
+        <input class="full" id="admTitle" placeholder="Título" required />
+        <select id="admCategory" required>
+          <option value="avisos">Avisos e Notícias</option>
+          <option value="comunicados">Comunicados</option>
+          <option value="treinamentos">Treinamentos</option>
+          <option value="materiais">Materiais de Apoio</option>
+        </select>
+        <input id="admDate" type="date" required />
+        <textarea class="full" id="admText" rows="3" placeholder="Descrição do conteúdo" required></textarea>
+        <input type="hidden" id="admId" />
+        <div class="row full">
+          <button type="submit">Salvar conteúdo</button>
+          <button type="button" class="ghost" id="clearEdit">Limpar</button>
+        </div>
+      </form>
+      <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+      ${cardsHtml(items)}
+      <div class="grid" style="margin-top:10px;">
+        ${items.map(item => `<div class="item">
+          <strong>${item.title}</strong>
+          <small style="display:block; margin:6px 0;">${item.category} • ${formatDate(item.date)}</small>
+          <div class="row">
+            <button data-edit="${item.id}" class="ghost">Editar</button>
+            <button data-del="${item.id}" class="danger">Excluir</button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </section>`;
+}
+
+function bindAdminActions() {
+  const form = document.getElementById('adminForm');
+  if (!form) return;
+
+  document.getElementById('admDate').value = new Date().toISOString().slice(0,10);
+
+  form.onsubmit = e => {
+    e.preventDefault();
+    const data = getContent();
+    const id = document.getElementById('admId').value;
+    const payload = {
+      id: id || crypto.randomUUID(),
+      title: document.getElementById('admTitle').value.trim(),
+      category: document.getElementById('admCategory').value,
+      date: document.getElementById('admDate').value,
+      text: document.getElementById('admText').value.trim()
+    };
+    if (!payload.title || !payload.text || !payload.date) return;
+
+    const idx = data.findIndex(x => x.id === id);
+    if (idx >= 0) data[idx] = payload; else data.unshift(payload);
+    setContent(data);
+    clearAdminForm();
+    render();
+  };
+
+  document.getElementById('clearEdit').onclick = clearAdminForm;
+
+  document.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.onclick = () => {
+      const target = getContent().find(x => x.id === btn.dataset.edit);
+      if (!target) return;
+      document.getElementById('admId').value = target.id;
+      document.getElementById('admTitle').value = target.title;
+      document.getElementById('admCategory').value = target.category;
+      document.getElementById('admDate').value = target.date;
+      document.getElementById('admText').value = target.text;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  document.querySelectorAll('[data-del]').forEach(btn => {
+    btn.onclick = () => {
+      const filtered = getContent().filter(x => x.id !== btn.dataset.del);
+      setContent(filtered);
+      render();
+    }
+  });
+}
+
+function clearAdminForm() {
+  ['admId','admTitle','admText'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('admCategory').value = 'avisos';
+  document.getElementById('admDate').value = new Date().toISOString().slice(0,10);
+}
+
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  render();
+}
+
+document.getElementById('loginBtn').onclick = () => {
+  const username = document.getElementById('username').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('loginMsg');
+  const user = users[username];
+
+  if (!user || user.password !== password) {
+    msg.textContent = 'Usuário ou senha inválidos.';
+    msg.style.color = 'var(--danger)';
+    return;
+  }
+
+  currentUser = user;
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('adminTab').classList.toggle('hidden', user.role !== 'admin');
+  document.getElementById('searchInput').value = '';
+  setView('inicio');
+};
+
+document.getElementById('searchInput').addEventListener('input', render);
+document.getElementById('mainNav').addEventListener('click', e => {
+  const view = e.target.dataset.view;
+  if (view) setView(view);
+});
+
+document.getElementById('profileBtn').onclick = () => {
+  if (!currentUser) return;
+  alert(`Perfil\n\nNome: ${currentUser.name}\nÁrea: ${currentUser.area}\nAcesso: ${currentUser.role}`);
+};
+
+document.getElementById('logoutBtn').onclick = () => window.location.reload();
+</script>
+</body>
+</html>
